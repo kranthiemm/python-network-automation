@@ -1,0 +1,8 @@
+*.pyc
+__pycache__/
+.venv/
+venv/
+.env
+*.log
+.vault_pass*
+.DS_Store
