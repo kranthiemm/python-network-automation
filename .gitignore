@@ -6,3 +6,5 @@ venv/
 *.log
 .vault_pass*
 .DS_Store
+.env
+inventory/devices.yaml
