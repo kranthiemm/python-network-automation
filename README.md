@@ -42,3 +42,17 @@ equivalent of `ansible-network-automation/playbooks/02_interface_status.yml`.
 TextFSM returns a ready-made list of dictionaries (one per interface)
 instead of raw text - no manual `.split()`/line-parsing needed, closing
 most of the gap with Ansible's pre-parsed `ios_facts` output. 
+
+### 03_cdp_neighbors.py
+Connects to one or more devices, runs `show cdp neighbors detail` with
+TextFSM parsing, and prints each neighbor's parsed details. Python
+equivalent of `ansible-network-automation/playbooks/03_cdp_neighborss.yml`.
+
+Includes a defensive check (`isinstance(neighbors, list)`) for when TextFSM
+fails to match the output against its template - Netmiko doesn't raise an
+error in that case, it silently falls back to returning the raw string
+instead of a parsed list. Without this check, looping over that string with
+`for neighbor in neighbors:` would iterate character-by-character (since
+Python loops over a string one character at a time) rather than failing
+loudly - a genuinely sneaky bug class worth guarding against any time
+`use_textfsm=True` output is consumed downstream.
