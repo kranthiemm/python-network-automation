@@ -56,3 +56,11 @@ instead of a parsed list. Without this check, looping over that string with
 Python loops over a string one character at a time) rather than failing
 loudly - a genuinely sneaky bug class worth guarding against any time
 `use_textfsm=True` output is consumed downstream.
+
+
+### 04_vlan_summary.py
+Connects to one or more devices, runs `show vlan brief` with TextFSM
+parsing, and prints each VLAN's ID and name. Python equivalent of
+`ansible-network-automation/playbooks/04_vlan_summary.yml`. Same defensive
+`isinstance(vlans, list)` pattern as `03_cdp_neighbors.py`, to handle
+TextFSM silently falling back to raw text when parsing fails.
