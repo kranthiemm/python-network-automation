@@ -8,3 +8,5 @@ venv/
 .DS_Store
 .env
 inventory/devices.yaml
+hostnames.txt
+outputs/
