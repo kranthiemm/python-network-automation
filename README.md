@@ -84,21 +84,3 @@ explicitly, writing a clear per-device error line to the output rather
 than letting one bad host crash the whole run - closer to how the real
 interview task is actually expected to behave across a list of many
 devices where some may be unreachable.
-
-
-## Compliance & Remediation
-
-Scripts prefixed `000_` are capable of making real configuration changes to
-devices - every other script in this project is strictly read-only. Golden
-(desired) configs live in `golden_configs/`, one YAML file per compliance
-domain (e.g. `ntp.yaml`, `vlans.yaml`) - deliberately kept as data, separate
-from the automation logic, so the desired state can be reviewed/changed
-independently of the code that enforces it.
-
-### 000_ntp_compliance_remediate.py
-Gathers each device's current NTP server config, compares it against the
-golden list in `golden_configs/ntp.yaml`, and reports compliant/non-compliant
-status. For non-compliant devices, computes exactly which servers are
-missing and builds the remediation commands - the actual push is currently
-commented out (dry-run only) pending confirmation before applying real
-changes.
