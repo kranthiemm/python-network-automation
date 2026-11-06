@@ -64,3 +64,23 @@ parsing, and prints each VLAN's ID and name. Python equivalent of
 `ansible-network-automation/playbooks/04_vlan_summary.yml`. Same defensive
 `isinstance(vlans, list)` pattern as `03_cdp_neighbors.py`, to handle
 TextFSM silently falling back to raw text when parsing fails.
+
+### 05_ntp_extraction.py
+Reads every hostname from `hostnames.txt` (a plain text file, one hostname
+per line, matching a real interview task: "read a file of hostnames,
+connect to each, extract its NTP server, write results to an output
+file"), connects to each via Netmiko, extracts configured NTP server(s)
+via regex, and writes one result line per device to
+`outputs/ntp_results.txt`.
+
+Unlike scripts `01`-`04`, this one takes no command-line arguments at all -
+input/output are fixed file paths rather than positional arguments, to
+avoid the kind of ambiguity a prior version of this script had (where
+`sys.argv` meant "device names" in earlier scripts but would have meant
+"file paths" here - same-looking commands, two incompatible meanings).
+
+Handles both missing-inventory-entry and connection-failure cases
+explicitly, writing a clear per-device error line to the output rather
+than letting one bad host crash the whole run - closer to how the real
+interview task is actually expected to behave across a list of many
+devices where some may be unreachable.
