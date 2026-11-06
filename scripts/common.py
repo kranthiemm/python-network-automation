@@ -25,3 +25,8 @@ def resolve_device_name(argv, inventory):
     if len(argv)>1:
         return argv[1:]
     return list(inventory.keys())
+
+def load_golden_config(domain):
+    path = f"golden_configs/{domain}.yaml"
+    with open(path) as f:
+        return yaml.safe_load(f)
