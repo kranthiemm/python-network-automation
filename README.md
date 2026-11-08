@@ -84,3 +84,12 @@ explicitly, writing a clear per-device error line to the output rather
 than letting one bad host crash the whole run - closer to how the real
 interview task is actually expected to behave across a list of many
 devices where some may be unreachable.
+
+### 000_vlan_push.py
+Pushes VLAN 100 named `vlan_test` to a device, checking first whether it
+already exists - manual idempotency, done by hand, unlike Ansible's
+`ios_vlans` resource module which does this internally.
+
+`vlan_already_exists()` connects, runs `show vlan brief` with TextFSM
+parsing, and checks whether any parsed VLAN's `vlan_id` matches the target.
+Two defensive details worth calling out:
